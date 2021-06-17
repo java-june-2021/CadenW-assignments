@@ -13,6 +13,10 @@ public class ProjectTest {
         test2.setName("Bo");
         test2.setName("Bob's Website");
         System.out.println(test2.getName());
+        System.out.println(test3.elevatorPitch());
+        System.out.println(test2.getCost());
+        test2.setCost(200.00);
+        System.out.println(test2.getCost());
 
 
     }
