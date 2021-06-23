@@ -40,6 +40,5 @@ public class Pokemon{
     // Attack method to attack another pokemon 
     public void attackPokemon(Pokemon pokemon){
         pokemon.health -= 10;
-
     }
 }
