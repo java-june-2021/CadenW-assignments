@@ -1,0 +1,13 @@
+@charset "ISO-8859-1";
+
+
+*{
+	text-align:center;
+
+}
+.date{
+	color: blue;
+}
+.time{
+	color: green;
+}
