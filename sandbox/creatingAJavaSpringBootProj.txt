@@ -1,0 +1,20 @@
+1.)Start a new spring starter proj
+2.)Name and artifact must match and point to the same file location. Group and package must match naming convention is com.caden.nameOfProj
+3.)Add dependencies spring dev tools and spring web then add tomcat and jstl in pom.xml below is what you need.
+        <dependency>
+                <groupId>org.apache.tomcat.embed</groupId>
+                <artifactId>tomcat-embed-jasper</artifactId>
+        </dependency>
+        <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>jstl</artifactId>
+        </dependency>
+4.)In src/main/java create a new package with the exact same name as the package above it but add .controllers at the end 
+5.)Then add a class into that package titled HomeController Or whatever makes sense if its login and reg name it LogAndRegController 
+6.)Drop: spring.mvc.view.prefix: /WEB-INF/ ,  Into application.properties 
+7.)in src inside the main folder create a new folder entitled webapp inside webapp make a folder entitled WEB-INF this is where jsp files are kept 
+8.)You need this: <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %> tag at the top of every jsp page 
+9.)In the controller above the main controller name you need @Controller to load jsp pages 
+10.)Above every method you need @RequestMapping(path="/", method=RequestMethod.GET(or POST))
+11.)Do a test method to register a index.jsp to make sure everythings linked up
+12.)@RequestParam() is how you can take in info from the front to the backend and store it 
