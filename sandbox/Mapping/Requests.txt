@@ -1,0 +1,31 @@
+1.)@RequestParam() is how you can take in info from the front to the backend and store it 
+2.)Home Controller or any other controller is like views.py in python django where you write your methods and paths in that file and use the db to help display on the front end
+3.)You could have a basic controller like this: 
+(You need @Controller to load jsp pages)
+@Controller
+public class DojoController {
+	@RequestMapping(path="/", method=RequestMethod.GET)   --->pretty straight forward path where this method goes (url) and method = post or get 
+	public String index() {                              ---> naming the function it always returns a string 
+		return "index.jsp";                          ---> returning jsp file 
+	}
+4.)if your taking info from the front to the backend you need @RequestParam("name") String name, @RequestParam("location") String location, etc.)
+5.)then you use Model and .addAttribute("name", name); all this together looks like this: p.s remember these are saved in a dict key:value pairs 
+	@RequestMapping(path="/surveyResults", method=RequestMethod.POST)
+	public String surveyResults(@RequestParam("name") String name, @RequestParam("location") String location, @RequestParam("lang") String lang, @RequestParam("desc") String desc, Model viewModel) {
+		viewModel.addAttribute("name", name);
+		viewModel.addAttribute("location", location);
+		viewModel.addAttribute("lang", lang);
+		viewModel.addAttribute("desc", desc);
+		if(lang.equals("Java")) {
+			return "java.jsp";
+		}
+		return "results.jsp";
+6.) Then to display this on jsp pages you would use a c out which looks like this 
+<div class="container">
+	<h1>Welcome Java Lover!</h1>
+	<h1>Submitted Info!</h1>
+	<h3>Name: <c:out value="${name}"/></h3>                --->Notice the <c:out value="${name} is like {{User.name}} in python and the data is being stored in Model viewModel above in the controller the name (name) has to match whats in the controller 
+	<h3>Location: <c:out value="${location}"/></h3>
+	<h3>Language: <c:out value="${lang}"/></h3>
+	<h3>Description: <c:out value="${desc}"/></h3>
+</div>
