@@ -78,4 +78,9 @@ public class Book {
     @DateTimeFormat(pattern = "MM/dd/yyyy HH:mm:ss")
     private Date updatedAt;
 }
+16.) Dont forget to add this dependency so you can have validations 
+        <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
 

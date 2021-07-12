@@ -30,9 +30,8 @@ public class AlbumService {
 		return this.aRepo.save(album);
 	}
 	//delete
-	public String deleteAlbum(long id) {
+	public void deleteAlbum(Long id) {
 		this.aRepo.deleteById(id);
-		return "Album" + id + "has been deleted";
 	}
 
 }
