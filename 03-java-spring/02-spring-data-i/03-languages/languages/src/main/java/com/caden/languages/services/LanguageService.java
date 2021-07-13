@@ -22,5 +22,11 @@ public class LanguageService {
 	public Language getOneLang(Long id) {
 		return this.lRepo.findById(id).orElse(null);
 	}
+	public Language update(Language language) {
+		return this.lRepo.save(language);
+	}
+	public void delete(Long id) {
+		this.lRepo.deleteById(id);
+	}
 
 }

@@ -1,0 +1,2 @@
+@Model is like context in python in class we've been naming it viewModel because were taking info from the back and displaying it on the front 
+@ModelAttribute is different its taking information that the user puts in and using a contructor in your models to create an object 

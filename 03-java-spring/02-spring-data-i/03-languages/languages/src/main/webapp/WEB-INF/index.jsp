@@ -24,15 +24,15 @@
 			<tbody>
 			<c:forEach items="${allLanguages}" var="lang">
 				<tr>
-					<td><a href="/language/${lang.id}">${lang.name}</a></td>
+					<td><a href="/languages/${lang.id}">${lang.name}</a></td>
 					<td>${lang.creator}</td>
 					<td>${lang.version}</td>
-					<td><a href="/{id}/edit">Edit</a>|<a href="/{id}/delete">Delete</a></td>
+					<td><a href="/languages/${lang.id}/edit">Edit</a>|<a href="languages/${lang.id}/delete">Delete</a></td>
 				</tr>
 			</c:forEach>
 			</tbody>
 			</table>
-			<form:form action="/addLanguage" method="POST" modelAttribute="language">
+			<form:form action="/languages" method="POST" modelAttribute="language">
 			<div class="form-group">
 				<form:label path="name">Name</form:label>
 				<form:errors path="name"/>
