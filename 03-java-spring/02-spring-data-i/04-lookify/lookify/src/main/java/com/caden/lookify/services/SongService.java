@@ -28,4 +28,10 @@ public class SongService {
 	public void delete(Long id) {
 		this.sRepo.deleteById(id);
 	}
+	public List<Song> searchArtist(String artist){
+		return sRepo.searchByArtist(artist);
+	}
+	public List<Song> topTen(){
+		return sRepo.findTopTenByRating();
+	}
 }

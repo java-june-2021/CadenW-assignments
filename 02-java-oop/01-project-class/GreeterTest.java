@@ -3,13 +3,13 @@ public class GreeterTest{
         Greeter g = new Greeter();
 
         String greeting = g.greet();
-        String greetingWithName = g.greet();
+        String greetingWithName = g.greet("Caden");
         System.out.println(greetingWithName);
 
-        // if (greeting.equals("Hello World") || greetingWithName.equals("Hello Caden")){
-        //     System.out.println("Test Successful");
-        // } else{
-        //     System.out.println("Test Fail");
-        // }
+        if (greeting.equals("Hello World") || greetingWithName.equals("Hello Caden")){
+            System.out.println("Test Successful");
+        } else{
+            System.out.println("Test Fail");
+        }
     }
 }

@@ -11,7 +11,7 @@
 </head>
 <body>
 	<div class="container">
-		<a href="/dashboard">Dash Board</a>
+		<a href="/dashboard">DashBoard</a>
 		<h1>Add A New Song</h1>
 		<form:form action="/addSong" method="POST" modelAttribute="song">
 			<div class="form-group">
