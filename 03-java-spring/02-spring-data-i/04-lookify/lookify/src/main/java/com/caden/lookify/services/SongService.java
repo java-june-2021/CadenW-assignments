@@ -31,7 +31,7 @@ public class SongService {
 	public List<Song> searchArtist(String artist){
 		return sRepo.searchByArtist(artist);
 	}
-	public List<Song> topTen(){
-		return sRepo.findTopTenByRating();
+	public List<Song> topTenByRating(){
+		return this.sRepo.findTop10ByOrderByRatingDesc();
 	}
 }

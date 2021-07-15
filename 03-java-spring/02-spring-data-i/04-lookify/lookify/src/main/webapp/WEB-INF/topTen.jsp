@@ -11,28 +11,22 @@
 </head>
 <body>
 	<div class="container">
+		<a href="/new">Add A Song!</a>
+		<a href="/dashboard">DashBoard</a>
+		<div class="navbar navbar-expand-lg navbar-light bg-light">
+		    <form class="d-flex" action="/search" method="GET">
+        		<input class="form-control me-2" type="text" name="artist">
+        		<button class="btn btn-outline-success" type="submit">Search</button>
+		    </form>
+    	</div>
 		<h1>Top Ten Songs</h1>
-		<table class="table table-light">
-			<thead>
-				<tr>
-					<th>Title</th>
-					<th>Artist</th>
-					<th>Rating</th>
-					<th>Action</th>
-				</tr>
-			</thead>
-			<tbody>
-			<c:forEach items="${songs}" var="song">
-				<tr>
-					<td><a href="/song/${song.id}">${song.title}</a></td>
-					<td>${song.artist}</td>
-					<td>${song.rating}</td>
-					<td><a href="/delete/${song.id}">Delete</a></td>
-				</tr>
-			</c:forEach>
-			
-			</tbody>
-		</table>
+		<c:forEach items="${songs}" var="song">
+		<ul>
+			<li>${song.rating} <a href="/song/${song.id}">${song.title}</a> - ${song.artist}</li>
+		
+		
+		</ul>
+		</c:forEach>
 	</div>
 </body>
 </html>

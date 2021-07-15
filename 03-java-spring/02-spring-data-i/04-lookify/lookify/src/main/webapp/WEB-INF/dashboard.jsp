@@ -12,6 +12,7 @@
 <body>
 	<div class="container">
 		<a href="/new">Add A Song!</a>
+		<a href="/topTen">Top Ten Songs</a>
 		<div class="navbar navbar-expand-lg navbar-light bg-light">
 		    <form class="d-flex" action="/search" method="GET">
         		<input class="form-control me-2" type="text" name="artist">

@@ -60,9 +60,9 @@ public class SongController {
 		viewModel.addAttribute("artist", artist);
 		return "searchResult.jsp";
 	}
-	@RequestMapping("/topTen")
+	@GetMapping("/topTen")
 	public String topTen(Model viewModel) {
-		viewModel.addAttribute("songs", this.sService.topTen());
+		viewModel.addAttribute("songs", this.sService.topTenByRating());
 		return "topTen.jsp";
 	}
 
