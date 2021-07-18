@@ -16,13 +16,17 @@
 				<table class="table table-dark">
 			<thead>
 				<tr>
-					<th>Name</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Age</th>
 				</tr>
 			</thead>
 			<tbody>
-			<c:forEach items="${dojo.ninjas}" var="dojo">
+			<c:forEach items="${dojo.ninjas}" var="ninja">
 				<tr>
-					<td><a href="/dojo/${dojo.ninja.getFirstName()}">${dojo.ninja.getLastName}</a></td>
+					<td>${ninja.firstName}</td>
+					<td>${ninja.lastName}</td>
+					<td>${ninja.age}</td>
 				</tr>
 			</c:forEach>
 			</tbody>
