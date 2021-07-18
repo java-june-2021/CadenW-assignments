@@ -1,6 +1,7 @@
 package com.caden.albums.models;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -37,6 +39,24 @@ public class Album {
 	@OneToOne(mappedBy="album", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private Label label;
 	
+	
+	//One to many relationship between album and songs 
+	@OneToMany(mappedBy="album", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	private List<Song> songs;
+	
+	
+	public List<Song> getSongs() {
+		return songs;
+	}
+
+
+
+	public void setSongs(List<Song> songs) {
+		this.songs = songs;
+	}
+
+
+
 	public Label getLabel() {
 		return label;
 	}

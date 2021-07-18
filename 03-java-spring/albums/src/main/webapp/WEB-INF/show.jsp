@@ -11,10 +11,14 @@
 </head>
 <body>
 	<div class="container">
-		<h1>Show details</h1>
+		<h1>Album details</h1>
 		<p>Band Name: ${album.bandName}</p>
 		<p>Album Name: ${album.albumName}</p>
 		<p>Release Year: ${album.releaseYear}</p>
+		<h2>Songs</h2>
+		<c:forEach items="${album.songs}" var="song">
+		<p>${song.name} - <i>${song.length}</i> ${song.genre}</p>
+		</c:forEach>
 		<c:choose>
 		<c:when test="${album.label != null}">
 		<h1>Label Information</h1>

@@ -32,6 +32,7 @@
 		</tbody>
 		</table>
 		<a href="/new">Add A New Album!</a>
+		<a href="/song/new">Add A Song To An Album!</a>
 	</div>
 </body>
 </html>

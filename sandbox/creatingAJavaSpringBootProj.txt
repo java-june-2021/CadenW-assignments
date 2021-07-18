@@ -18,8 +18,63 @@ spring.datasource.username=<<dbuser>>
 spring.datasource.password=<<dbpassword>>
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 spring.jpa.hibernate.ddl-auto=update
-
 Into application.properties 
+7.) I like to start in models first determine what models you need the validations the relationships between them and construct them. You must declare them at the top of the class with @Entity And @Table(name="(name of class plural)") then 	
+        @Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)     thses 3 line auto increments id when created 
+        private Long id;
+        private String name;
+        private int age;
+
+        @Column(updatable=false)   --> Protects from update and created to be manipulated 
+	private Date createdAt;
+	private Date updatedAt;
+        	@PrePersist       --> Also protects from update and created to be manipulated
+	protected void onCreate() {
+		this.createdAt = new Date();
+	}
+	@PreUpdate
+	protected void onUpdate() {
+		this.updatedAt = new Date();
+	}
+
+8.)Once you have all this figured out genereate an empty constructer and then getters and setters for everything
+9.) Get all the models figured out and then start the relationships between them 
+        For OneToOne: On parent class you need @OneToOne(mappedBy="(*)", cascade=CascadeType.ALL, fetch=FetchType.LAZY) ex.
+                                                                   this is my Album class which is the parent class and im connecting to a label class establashing one to one relationship:
+
+                                                                   @OneToOne(mappedBy="*album", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	                                                           private Label label;
+
+
+                                                                   this is what it looks like on the Label class:
+
+                                                                   @OneToOne(fetch=FetchType.LAZY)
+	                                                           @JoinColumn(name="album_id")  -->This is making the column linking the two tables in SQL
+                                                                   private Album *album;
+                                                 heres an example of one to many from the same project this time im connecting a song table 
+
+        For OneToMany: Heres an example of one to many from the same project this time im connecting a song table
+        to album table for a OneToMany relationship (Album Model):@OneToMany(mappedBy="album", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	                                                          private List<Song> songs;
+
+                                                                for Song Model:
+                                                                @ManyToOne(fetch=FetchType.LAZY)
+                                                                @JoinColumn(name="album_id")
+                                                                private Album album;
+        Notice the small differences also its okay that the mappedBy name is the same
+
+        For ManyToMany:
+	
+	
+
+
+
+
+10.)Once models are done relationships are set and your schema is made (make sure the name matches application.properties YOUR_SCHEMA)
+test to make sure there connected in mySQL by inserting dummy data SELECT * FROM (Table name) 
+INSERT INTO (table name)(key name, key name, etc) VALUES("value", "value", "value")
+11.)Dont forget to generate all the getters and setters after you establash the relationships or make changes where its neccesary
 7.)in src inside the main folder create a new folder entitled webapp inside webapp make a folder entitled WEB-INF this is where jsp files are kept 
 8.)You need this: <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %> tag at the top of every jsp page it allows you to display info using <c:out value=$"{}"/> and <c:forEach /> loops etc.
         p.s also you need <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>  for jstl forms to be used which are much better than HTML forms 
