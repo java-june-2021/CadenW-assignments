@@ -10,23 +10,36 @@
 </head>
 <body>
 	<div class="container">
+	<a href="/logout">Logout</a>
+	<h1>Welcome: ${user.firstName} ${user.lastName}</h1>
 		<h1 class="text-center">Welcome to Our Album Database</h1>
 		<table class="table table-dark">
 		<thead>
 		<tr>
-		<th>Id</th>
+		<th>Action</th>
 		<th>Band Name</th>
 		<th>Album Name</th>
 		<th>Release Date</th>
+		<th>Likes</th>
 		</tr>
 		</thead>
 		<tbody>
 		<c:forEach items="${allAlbums}" var="album">
 		<tr>
-		<td>${album.id}</td>
+		<td>
+		<c:choose>
+		<c:when test="${album.likers.contains(user)}">
+		<a href ="/unLike/${album.id}">Remove Like</a>
+		</c:when>
+		<c:otherwise>
+		<a href="/like/${album.id}">Like</a>
+		</c:otherwise>
+		</c:choose>
+		</td>
 		<td><a href="/album/${album.id}">${album.bandName}</a></td>
 		<td>${album.albumName}</td>
 		<td>${album.releaseYear}</td>
+		<td>${album.likers.size()}</td>
 		</tr>
 		</c:forEach>
 		</tbody>

@@ -10,6 +10,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
@@ -44,9 +47,28 @@ public class Album {
 	@OneToMany(mappedBy="album", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private List<Song> songs;
 	
-	
+	//Setting up many to many relationship between users and albums they can like
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(
+			name="likes",
+			joinColumns = @JoinColumn(name="album_id"),
+			inverseJoinColumns = @JoinColumn(name="user_id")
+			)
+	private List<User> likers;
 	public List<Song> getSongs() {
 		return songs;
+	}
+
+
+
+	public List<User> getLikers() {
+		return likers;
+	}
+
+
+
+	public void setLikers(List<User> likers) {
+		this.likers = likers;
 	}
 
 

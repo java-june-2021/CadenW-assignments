@@ -64,7 +64,22 @@ Into application.properties
                                                                 private Album album;
         Notice the small differences also its okay that the mappedBy name is the same
 
-        For ManyToMany:
+        For ManyToMany:                                 For many to many you have to create a new table that carries 2 foriegn keys for the 2 objects that are sharing the relationship
+                                                        in the same albums project this is how the album model looks 
+                                                        @ManyToMany(fetch=FetchType.LAZY)
+                                                        @JoinTable(
+                                                        name="likes",
+                                                        joinColumns = @JoinColumn(name="user_id"),
+                                                        inverseJoinColumns = @JoinColumn(name="album_id")
+                                                        )
+
+                                                        and this is the user model
+                                                        @ManyToMany(fetch=FetchType.LAZY)
+	                                                @JoinTable(
+                                                        name="likes",
+                                                        joinColumns = @JoinColumn(name="album_id"),
+                                                        inverseJoinColumns = @JoinColumn(name="user_id")
+                                                        )
 	
 	
 
@@ -138,5 +153,10 @@ public class Book {
         <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <dependency> ---> BCrypt dependency
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.4</version>
         </dependency>
 

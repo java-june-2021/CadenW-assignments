@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.caden.albums.models.Album;
+import com.caden.albums.models.User;
 import com.caden.albums.repositories.AlbumRepository;
 
 @Service 
@@ -32,6 +33,18 @@ public class AlbumService {
 	//delete
 	public void deleteAlbum(Long id) {
 		this.aRepo.deleteById(id);
+	}
+	// add like to an album 
+	public void addLike(Album album, User user) {
+		List<User> currentLikes = album.getLikers();
+		currentLikes.add(user);
+		this.aRepo.save(album);
+	}
+	// remove like from album 
+	public void removeLike(Album album, User user) {
+		List<User> currentLikes = album.getLikers();
+		currentLikes.remove(user);
+		this.aRepo.save(album);
 	}
 
 }

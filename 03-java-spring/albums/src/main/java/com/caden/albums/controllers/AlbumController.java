@@ -2,6 +2,7 @@ package com.caden.albums.controllers;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.caden.albums.models.Album;
 import com.caden.albums.models.Label;
+import com.caden.albums.models.User;
 import com.caden.albums.services.AlbumService;
 import com.caden.albums.services.LabelService;
+import com.caden.albums.services.UserService;
+import com.caden.albums.validators.UserValidator;
 
 @Controller
 public class AlbumController {
@@ -28,14 +32,73 @@ public class AlbumController {
 	@Autowired
 	private LabelService lService;
 	
+	@Autowired
+	private UserService uService;
+	
+	@Autowired 
+	private UserValidator uValidator;
+	
 	@GetMapping("/")
-	public String index(Model viewModel) {
+	public String login(@ModelAttribute("user") User user) {
+		return "log.jsp";
+	}
+	@PostMapping("/register")
+	public String register(@Valid @ModelAttribute("user") User user, BindingResult result, HttpSession session) {
+		uValidator.validate(user, result);
+		if(result.hasErrors()) {
+			return "log.jsp";
+		}
+		User newUser = this.uService.regUser(user);
+		session.setAttribute("user__id", newUser.getId());
+		return "redirect:/albums";
+	}
+	
+	@PostMapping("/login")
+	public String login(@RequestParam("lemail") String email, @RequestParam("lpassword") String password, RedirectAttributes redirectAttr, HttpSession session) {
+		if(!this.uService.loginUser(email, password)) {
+			redirectAttr.addFlashAttribute("loginError", "Invalid Email Or Password");
+			return "redirect:/";
+		}
+		User user = this.uService.getByEmail(email);
+		session.setAttribute("user__id", user.getId());
+		return "redirect:/albums";
+	}
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/";
+	}
+	@GetMapping("/albums")
+	public String index(Model viewModel, HttpSession session) {
+		if((Long)session.getAttribute("user__id") == null) {
+			return "redirect:/";
+		}
+		Long thisUser = (Long)session.getAttribute("user__id");
+		viewModel.addAttribute("user", this.uService.findOneUser(thisUser));
 		viewModel.addAttribute("allAlbums", this.aService.allAlbums());
 		return "index.jsp";
 	}
 	@GetMapping("/new")
 	public String newAlbum(@ModelAttribute("album") Album album) {
 		return "new.jsp";
+	}
+	@GetMapping("/like/{id}")
+	public String like(@PathVariable("id") Long id, HttpSession session) {
+		Long userId = (Long)session.getAttribute("user__id");
+		Long albumId = id;
+		User liker = this.uService.findOneUser(userId);
+		Album likedAlbum = this.aService.getOneAlbum(albumId);
+		this.aService.addLike(likedAlbum, liker);
+		return "redirect:/albums";
+	}
+	@GetMapping("/unLike/{id}")
+	public String unLike(@PathVariable("id") Long id, HttpSession session) {
+		Long userId = (Long)session.getAttribute("user__id");
+		Long albumId = id;
+		User liker = this.uService.findOneUser(userId);
+		Album likedAlbum = this.aService.getOneAlbum(albumId);
+		this.aService.removeLike(likedAlbum, liker);
+		return "redirect:/albums";
 	}
 	@PostMapping("/addRecord")
 	public String addAlbumJSTL(@Valid @ModelAttribute("album") Album album, BindingResult result) {
