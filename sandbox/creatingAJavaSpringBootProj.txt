@@ -154,9 +154,8 @@ public class Book {
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
-        <dependency> ---> BCrypt dependency
+       <dependency>                                          ---->dependency for BCrypt
             <groupId>org.mindrot</groupId>
-            <artifactId>jbcrypt</artifactId>
+            <artifactId>jbcrypt</artifactId>               
             <version>0.4</version>
         </dependency>
-
