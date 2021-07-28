@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%> 
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix = "t" tagdir="/WEB-INF/tags" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,8 +11,10 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
-	<div class="container">
+	<t:nav>
 		<h1>Album details</h1>
+		<i>Added By: <a href="/profile/${album.user.id}">${album.user.firstName} ${album.user.lastName}</a></i>
+		<hr>
 		<p>Band Name: ${album.bandName}</p>
 		<p>Album Name: ${album.albumName}</p>
 		<p>Release Year: ${album.releaseYear}</p>
@@ -42,8 +45,11 @@
 		</form:form>
 		</c:otherwise>
 		</c:choose>
+		
+		<c:if test="${album.user.id == userThatsLoggedIn}">
 		<a href="/${album.id}/edit" class="btn btn-primary">Edit Album</a>
 		<a href="/${album.id}/delete" class="btn btn-danger">Delete Album</a>
-	</div>
+		</c:if>
+	</t:nav>
 </body>
 </html>

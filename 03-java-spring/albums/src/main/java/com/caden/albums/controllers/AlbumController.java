@@ -79,7 +79,9 @@ public class AlbumController {
 		return "index.jsp";
 	}
 	@GetMapping("/new")
-	public String newAlbum(@ModelAttribute("album") Album album) {
+	public String newAlbum(@ModelAttribute("album") Album album, HttpSession session, Model viewModel) {
+		Long userLoggedInId = (Long)session.getAttribute("user__id");
+		viewModel.addAttribute("userID", userLoggedInId);
 		return "new.jsp";
 	}
 	@GetMapping("/like/{id}")
@@ -106,7 +108,7 @@ public class AlbumController {
 			return "new.jsp";
 		}
 		this.aService.createAlbum(album);
-		return "redirect:/";
+		return "redirect:/albums";
 	}
 	@PostMapping("/addRecordHTMLWay")
 	public String addAlbum(@RequestParam("bandName") String bandName, @RequestParam("albumName") String albumName, @RequestParam("releaseYear") int releaseYear, RedirectAttributes redirectAttr) {
@@ -125,8 +127,9 @@ public class AlbumController {
 		return "redirect:/";
 	}
 	@GetMapping("/album/{id}")
-	public String show(Model viewModel, @PathVariable("id") Long id, @ModelAttribute("label") Label label) {
+	public String show(Model viewModel, @PathVariable("id") Long id, @ModelAttribute("label") Label label, HttpSession session) {
 		Album albumToShow = this.aService.getOneAlbum(id);
+		viewModel.addAttribute("userThatsLoggedIn", session.getAttribute("user__id"));
 		viewModel.addAttribute("album", albumToShow);
 		return "show.jsp";
 	}
@@ -143,7 +146,13 @@ public class AlbumController {
 		return "redirect:/album/{albumId}";
 	}
 	@GetMapping("/{id}/edit")
-	public String edit(@ModelAttribute("album") Album album, Model viewModel, @PathVariable("id") Long id) {
+	public String edit(@ModelAttribute("album") Album album, Model viewModel, @PathVariable("id") Long id, HttpSession session) {
+		User userLoggedIn = this.uService.findOneUser((Long)session.getAttribute("user__id"));
+		Album albumToShow = this.aService.getOneAlbum(id);
+		if(albumToShow.getUser() != userLoggedIn) {
+			return "redirect:/albums";
+		}
+		viewModel.addAttribute("userId", session.getAttribute("user__id"));
 		viewModel.addAttribute("album", this.aService.getOneAlbum(id));
 		return "/edit.jsp";
 	}
@@ -160,5 +169,11 @@ public class AlbumController {
 	public String delete(@PathVariable("id") Long id) {
 		this.aService.deleteAlbum(id);
 		return "redirect:/";
+	}
+	@GetMapping("/profile/{id}")
+	public String showUser(Model viewModel, @PathVariable("id") Long id) {
+		User userToDisplayOnFrontEnd = this.uService.findOneUser(id);
+		viewModel.addAttribute("userToDisplay", userToDisplayOnFrontEnd);
+		return "profile.jsp";
 	}
 }

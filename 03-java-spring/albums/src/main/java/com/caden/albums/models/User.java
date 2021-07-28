@@ -3,6 +3,7 @@ package com.caden.albums.models;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -50,6 +52,9 @@ public class User {
 	protected void onUpdate() {
 		this.updatedAt = new Date();
 	}
+	@OneToMany(mappedBy="user", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	private List<Album> albums;
+	
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(
 			name="likes",
@@ -62,6 +67,12 @@ public class User {
 	
 	public User() {
 
+	}
+	public List<Album> getAlbums() {
+		return albums;
+	}
+	public void setAlbums(List<Album> albums) {
+		this.albums = albums;
 	}
 	public List<Album> getLikedAlbums() {
 		return likedAlbums;

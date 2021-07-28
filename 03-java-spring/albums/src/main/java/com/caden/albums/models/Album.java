@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
@@ -42,6 +43,9 @@ public class Album {
 	@OneToOne(mappedBy="album", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private Label label;
 	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="user_id")
+	private User user;
 	
 	//One to many relationship between album and songs 
 	@OneToMany(mappedBy="album", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
@@ -57,6 +61,18 @@ public class Album {
 	private List<User> likers;
 	public List<Song> getSongs() {
 		return songs;
+	}
+
+
+
+	public User getUser() {
+		return user;
+	}
+
+
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 
