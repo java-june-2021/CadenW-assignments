@@ -1,4 +1,4 @@
-package com.caden.albums.models;
+package com.caden.beltReview.models;
 
 import java.util.Date;
 import java.util.List;
@@ -38,6 +38,7 @@ public class User {
 	@Email(message="Invalid Email")
 	@Pattern(regexp=".[A-Za-z0-9._%+-]+@[A-Za-z0-9.-].+\\..[a-z]{2,6}$", message="Invalid Email")
 	private String email;
+	@Size(min=8)
 	private String password;
 	@Transient 
 	private String confirmPassword;
@@ -53,33 +54,19 @@ public class User {
 	protected void onUpdate() {
 		this.updatedAt = new Date();
 	}
+	
 	@OneToMany(mappedBy="user", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	private List<Album> albums;
+	private List <Thought> thoughts;
 	
-	@ManyToMany(fetch=FetchType.LAZY)
-	@JoinTable(
-			name="likes",
-			joinColumns = @JoinColumn(name="user_id"),
-			inverseJoinColumns = @JoinColumn(name="album_id")
-			)
-	
-	private List<Album> likedAlbums;
-	
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "likes", 
+        joinColumns = @JoinColumn(name = "user_id"), 
+        inverseJoinColumns = @JoinColumn(name = "thought_id")
+    )
+    private List <Thought> likedThoughts;
 	
 	public User() {
-
-	}
-	public List<Album> getAlbums() {
-		return albums;
-	}
-	public void setAlbums(List<Album> albums) {
-		this.albums = albums;
-	}
-	public List<Album> getLikedAlbums() {
-		return likedAlbums;
-	}
-	public void setLikedAlbums(List<Album> likedAlbums) {
-		this.likedAlbums = likedAlbums;
 	}
 	public Long getId() {
 		return id;
@@ -129,6 +116,17 @@ public class User {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+	public List<Thought> getThoughts() {
+		return thoughts;
+	}
+	public void setThoughts(List<Thought> thoughts) {
+		this.thoughts = thoughts;
+	}
+	public List<Thought> getLikedThoughts() {
+		return likedThoughts;
+	}
+	public void setLikedThoughts(List<Thought> likedThoughts) {
+		this.likedThoughts = likedThoughts;
+	}
 	
-
 }

@@ -11,7 +11,7 @@
 </head>
 <body>
 	<t:nav>
-		<p>User Information For ${userToDisplay.firstName} ${userToDisplay.lastName}</p>
+		<p>Profile For: ${userToDisplay.firstName} ${userToDisplay.lastName}</p>
 		<hr>
 		<h2>${userToDisplay.firstName}'s Albums</h2>
 		<ul>
