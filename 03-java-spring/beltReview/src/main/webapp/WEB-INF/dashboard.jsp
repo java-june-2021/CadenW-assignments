@@ -25,8 +25,16 @@
 		<button>Post</button>
 		</form:form>
 		<c:forEach items="${allThoughts}" var="thought">
-		<p>${thought.user.firstName} says: ${thought.post}</p>
-		<p><c:out value="${thought.usersWhoLiked.size()}"/> Likes</p>
+		<p>${thought.user.firstName}:</p>
+		<p>${thought.post}</p>
+		<c:choose>
+			<c:when test="${thought.usersWhoLiked.size() == 1}">
+				<p><c:out value="${thought.usersWhoLiked.size()}"/> Like</p>
+			</c:when> 
+			<c:otherwise>
+				<p><c:out value="${thought.usersWhoLiked.size()}"/> Likes</p>
+			</c:otherwise>
+		</c:choose> 
 		<c:choose>
 			<c:when test="${thought.user.id == user.id}">
 				<p><a href="/dashboard/${thought.id}/delete">Delete</a></p>

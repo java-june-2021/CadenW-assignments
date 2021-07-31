@@ -24,7 +24,22 @@
 				<p><a href="/dashboard/${thought.id}/delete">Delete</a></p>
 			</c:when> 
 		</c:choose> 
-		<p><c:out value="${thought.usersWhoLiked.size()}"/> Likes</p>
+		<c:choose>
+			<c:when test="${thought.usersWhoLiked.size() == 1}">
+				<p><c:out value="${thought.usersWhoLiked.size()}"/> Like</p>
+			</c:when> 
+			<c:otherwise>
+				<p><c:out value="${thought.usersWhoLiked.size()}"/> Likes</p>
+			</c:otherwise>
+		</c:choose> 
+		<c:choose>
+			<c:when test="${thought.usersWhoLiked.contains(user)}">
+				<a href="/dashboard/unlike/${thought.id}" class="btn btn-primary">Unlike</a>
+			</c:when>
+			<c:otherwise>
+			<a href="/dashboard/like/${thought.id}" class="btn 	btn-primary">like</a>
+			</c:otherwise>
+		</c:choose>
 		<hr>
 		</c:forEach>
 	</div>
