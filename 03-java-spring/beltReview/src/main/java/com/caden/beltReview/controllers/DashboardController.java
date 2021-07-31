@@ -65,7 +65,15 @@ public class DashboardController {
 	@GetMapping("/{id}/delete")
 	public String delete(@PathVariable("id") Long id) {
 		this.tService.deleteThought(id);
-		return "redirect:/";
+		return "redirect:/dashboard";
+	}
+	@GetMapping("/{id}/profile")
+	public String profile(@PathVariable("id") Long id, Model viewModel, HttpSession session) {
+		User userProfile = this.uService.findOneUser(id);
+		viewModel.addAttribute("thought", this.tService.allThoughts());
+		viewModel.addAttribute("loggedInUser", this.uService.findOneUser((Long)session.getAttribute("user__id")));
+		viewModel.addAttribute("user", userProfile);
+		return "profile.jsp";
 	}
 	
 	

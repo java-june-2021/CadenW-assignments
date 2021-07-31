@@ -11,7 +11,8 @@
 </head>
 <body>
 <div class="container">
-	<c:out value="${thought.user.firstName}"/> Says: <p>${thought.post}</p>
+	<p><a href="/dashboard/${thought.user.id}/profile">${thought.user.firstName}</a> Says: ${thought.post}</p>
+	<a href="/dashboard">Home</a>
 	<c:choose>
 	<c:when test="${thought.usersWhoLiked.contains(user)}">
 		<a href="/dashboard/unlike/${thought.id}" class="btn btn-primary">Unlike</a>

@@ -11,8 +11,9 @@
 </head>
 <body>
 	<div class="container">
-		<h1>Welcome To Blogs.com</h1>
-		<h3>Hello ${user.firstName}</h3>
+		<h1 class="text-center">Hello ${user.firstName} Welcome To Blogs.com</h1>
+		<a href="/logout" class="btn btn-secondary">Logout</a>
+		<a href="/dashboard/${user.id}/profile" class="btn btn-secondary">Profile</a>
 		<hr>
 		<form:form method="POST" action="/dashboard/newThought" modelAttribute="thought">
 		<div class="form-control">
@@ -25,9 +26,24 @@
 		</form:form>
 		<c:forEach items="${allThoughts}" var="thought">
 		<p>${thought.user.firstName} says: ${thought.post}</p>
-		<p><a href="/dashboard/${thought.id}/delete">Delete</a> 
-		<p><a href="/dashboard/${thought.id}">Details</a> | <c:out value="${thought.usersWhoLiked.size()}"/> People like this</p>
+		<p><c:out value="${thought.usersWhoLiked.size()}"/> Likes</p>
+		<c:choose>
+			<c:when test="${thought.user.id == user.id}">
+				<p><a href="/dashboard/${thought.id}/delete">Delete</a></p>
+			</c:when> 
+		</c:choose> 
+		<p><a href="/dashboard/${thought.user.id}/profile">${thought.user.firstName}'s Profile</a></p>
+		<c:choose>
+	<c:when test="${thought.usersWhoLiked.contains(user)}">
+		<a href="/dashboard/unlike/${thought.id}" class="btn btn-primary">Unlike</a>
+	</c:when>
+	<c:otherwise>
+		<a href="/dashboard/like/${thought.id}" class="btn 	btn-primary">like</a>
+	</c:otherwise>
+	</c:choose>
+	<hr>
 		</c:forEach>
+		<hr>
 	</div>
 </body>
 </html>
