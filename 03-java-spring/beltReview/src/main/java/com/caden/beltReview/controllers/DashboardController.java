@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.caden.beltReview.models.Comment;
 import com.caden.beltReview.models.Thought;
 import com.caden.beltReview.models.User;
+import com.caden.beltReview.services.CommentService;
 import com.caden.beltReview.services.ThoughtService;
 import com.caden.beltReview.services.UserService;
 
@@ -25,9 +27,11 @@ public class DashboardController {
 	private ThoughtService tService;
 	@Autowired
 	private UserService uService;
+	@Autowired
+	private CommentService cService;
 	
 	@GetMapping("")
-	public String Dashbaord(Model viewModel, @ModelAttribute("thought") Thought thought, HttpSession session) {
+	public String Dashbaord(Model viewModel, @ModelAttribute("thought") Thought thought, @ModelAttribute("comment") Comment comment, HttpSession session) {
 		viewModel.addAttribute("user", this.uService.findOneUser((Long)session.getAttribute("user__id")));
 		viewModel.addAttribute("allThoughts", this.tService.allThoughts());
 		return "dashboard.jsp";	
@@ -74,6 +78,16 @@ public class DashboardController {
 		viewModel.addAttribute("loggedInUser", this.uService.findOneUser((Long)session.getAttribute("user__id")));
 		viewModel.addAttribute("user", userProfile);
 		return "profile.jsp";
+	}
+	@PostMapping("/postComment")
+	public String postComment(@Valid @ModelAttribute("comment") Comment comment, BindingResult result, Model viewModel, HttpSession session) {
+		if(result.hasErrors()) {
+			viewModel.addAttribute("user", this.uService.findOneUser((Long)session.getAttribute("user__id")));
+			viewModel.addAttribute("allThoughts", this.tService.allThoughts());
+			return "dashboard.jsp";
+		}
+		this.cService.createComment(comment);
+		return "redirect:/dashboard";
 	}
 	
 	

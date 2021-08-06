@@ -1,0 +1,47 @@
+JQuery: JQuery is a javascript library Kind of like bootstrap for css
+react:is a library written in javascript and JSX(javascript html) 
+Angular: Angular is a framework 
+ECMASCRIPT or es is how javascript is read on so many different browsers and machines and so compatable 
+For us as developers, the takeaway is quite simple: ECMAScript is the standardization of JavaScript and JavaScript is the implementation of the ECMA Standard. Most of the JavaScript you’ve been exposed to is a version of the standard called ES5, standardized in 2009 and sometimes called ECMAScript 5.
+In JavaScript we have something called scopes there is global scope and local scope global scope means the whole program at any point from anywhere can access it whether its a variable, a function or whatever local scope just means that the function or variable is inside of something else like a function and cant be accessed from anywhere except the function
+Destructuring: essentially Destructuring is taken individual peices of information or data from an array or object and assigning it its own variable 
+How to destructer: say you have an object of key:value pairs its called person it would look like this 
+const person = {
+    firstName: "Caden",
+    lastName: "Wilcox",
+    age: 23,
+    etc: "etc"
+}
+if you want to destruct this using es6 it would look like this say you wanted the first name: const {firstName} = person;
+if your Destructuringan array it would look like this:
+const animals = ['horse', 'dog', 'fish', 'cat', 'bird'];
+const [firstAnimal, secondAnimal, thirdAnimal] = animals;
+each one of these is a indicy and its being given the variable name its important when dealing with arrays you give your own variable name when pulling from objects you use the key name
+Look at this code 
+const person = {
+  firstName: 'Bob',
+  lastName: 'Marley',
+  email: 'bob@marley.com',
+  password: 'sekureP@ssw0rd9',
+  username: 'barley',
+  addresses: [
+    {
+      address: '1600 Pennsylvania Avenue',
+      city: 'Washington, D.C.',
+      zipcode: '20500',
+    },
+    {
+      address: '221B Baker St.',
+      city: 'London',
+      zipcode: 'WC2N 5DU',
+    }
+  ],
+  createdAt: 1543945177623
+};
+If we want the individual addresses as variables we could certainly destructure addresses, then destructure each address.
+const { addresses: [whiteHouse, sherlock] } = person;
+What if we want to skip the first address and only want the city of the second, but using an alternate variable name?
+const { addresses: [ , { city: london }] } = person;
+console.log(london);
+// => London
+const and let: While both const and let are block scoped there are some differences we need to understand. let allows for reassignment of our declared variables content and does not require a value upon declaration. const, on the other hand, must assign a value at creation and that value may not change for the life of the variable. It is immutable.2

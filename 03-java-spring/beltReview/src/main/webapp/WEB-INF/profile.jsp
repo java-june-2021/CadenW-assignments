@@ -14,7 +14,7 @@
 		<h1 class="text-center">Welcome to ${user.firstName}'s Profile</h1>
 		<a href="/dashboard">Home</a>
 		<h2>Name: ${user.firstName} ${user.lastName}</h2>
-		<img alt="Profile Pic" src="/main/resources/img/profile.png">
+		<img alt="Profile Pic" src="/main/resources/img/profile.jpg">
 		<h4>Email: ${user.email}</h4>
 		<hr>
 		<c:forEach items="${user.thoughts}" var="thought">
@@ -40,7 +40,12 @@
 			<a href="/dashboard/like/${thought.id}" class="btn 	btn-primary">like</a>
 			</c:otherwise>
 		</c:choose>
+		<h5>Comments:</h5>
+		<c:forEach items="${thought.comments}" var="comment">
+		<p>${comment.user.firstName} Said: ${comment.tComment}</p>
+		
 		<hr>
+		</c:forEach>
 		</c:forEach>
 	</div>
 </body>

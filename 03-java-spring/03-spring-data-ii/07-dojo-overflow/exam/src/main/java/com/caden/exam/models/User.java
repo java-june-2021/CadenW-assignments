@@ -1,4 +1,4 @@
-package com.caden.beltReview.models;
+package com.caden.exam.models;
 
 import java.util.Date;
 import java.util.List;
@@ -23,6 +23,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+
 @Entity 
 @Table(name="users")
 public class User {
@@ -38,7 +39,8 @@ public class User {
 	@Email(message="Invalid Email")
 	@Pattern(regexp=".[A-Za-z0-9._%+-]+@[A-Za-z0-9.-].+\\..[a-z]{2,6}$", message="Invalid Email")
 	private String email;
-	@Size(min=8)
+	@NotBlank
+	@Size(min=8, max=250)
 	private String password;
 	@Transient 
 	private String confirmPassword;
@@ -54,22 +56,32 @@ public class User {
 	protected void onUpdate() {
 		this.updatedAt = new Date();
 	}
-	
 	@OneToMany(mappedBy="user", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	private List <Thought> thoughts;
+	private List<Idea> ideas;
 	
-	@OneToMany(mappedBy="user", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	private List <Comment> comments;
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(
+			name="likes",
+			joinColumns = @JoinColumn(name="user_id"),
+			inverseJoinColumns = @JoinColumn(name="idea_id")
+			)
 	
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-        name = "likes", 
-        joinColumns = @JoinColumn(name = "user_id"), 
-        inverseJoinColumns = @JoinColumn(name = "thought_id")
-    )
-    private List <Thought> likedThoughts;
+	private List<Idea> likedIdeas;
 	
 	public User() {
+	}
+	
+	public List<Idea> getIdeas() {
+		return ideas;
+	}
+	public void setIdeas(List<Idea> ideas) {
+		this.ideas = ideas;
+	}
+	public List<Idea> getLikedIdeas() {
+		return likedIdeas;
+	}
+	public void setLikedIdeas(List<Idea> likedIdeas) {
+		this.likedIdeas = likedIdeas;
 	}
 	public Long getId() {
 		return id;
@@ -118,24 +130,6 @@ public class User {
 	}
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
-	}
-	public List<Thought> getThoughts() {
-		return thoughts;
-	}
-	public void setThoughts(List<Thought> thoughts) {
-		this.thoughts = thoughts;
-	}
-	public List<Thought> getLikedThoughts() {
-		return likedThoughts;
-	}
-	public void setLikedThoughts(List<Thought> likedThoughts) {
-		this.likedThoughts = likedThoughts;
-	}
-	public List<Comment> getComments() {
-		return comments;
-	}
-	public void setComments(List<Comment> comments) {
-		this.comments = comments;
 	}
 	
 }

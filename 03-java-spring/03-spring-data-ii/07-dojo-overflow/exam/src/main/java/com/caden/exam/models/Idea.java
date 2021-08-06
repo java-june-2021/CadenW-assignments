@@ -1,9 +1,8 @@
-package com.caden.beltReview.models;
+package com.caden.exam.models;
 
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,22 +13,23 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+
+
 @Entity
-@Table(name="thoughts")
-public class Thought {
+@Table(name="ideas")
+public class Idea {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	@NotBlank
-	@Size(min=5)
-	private String post;
+	@Size(min=1, max=1000)
+	private String content;
 	@Column(updatable=false)
 	private Date createdAt;
 	private Date updatedAt;
@@ -42,23 +42,19 @@ public class Thought {
 	protected void onUpdate() {
 		this.updatedAt = new Date();
 	}
-	
-	@OneToMany(mappedBy="thought", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	private List <Comment> comments;
-	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="user_id")
 	private User user;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
-	    @JoinTable(
-	        name = "likes", 
-	        joinColumns = @JoinColumn(name = "thought_id"), 
-	        inverseJoinColumns = @JoinColumn(name = "user_id")
-	    )
-	private List <User> usersWhoLiked;
-	
-	public Thought() {
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(
+			name="likes",
+			joinColumns = @JoinColumn(name="idea_id"),
+			inverseJoinColumns = @JoinColumn(name="user_id")
+			)
+	private List<User> likers;
+
+	public Idea() {
 	}
 	public Long getId() {
 		return id;
@@ -66,11 +62,11 @@ public class Thought {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getPost() {
-		return post;
+	public String getContent() {
+		return content;
 	}
-	public void setPost(String post) {
-		this.post = post;
+	public void setContent(String content) {
+		this.content = content;
 	}
 	public Date getCreatedAt() {
 		return createdAt;
@@ -90,18 +86,12 @@ public class Thought {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public List<User> getUsersWhoLiked() {
-		return usersWhoLiked;
+	public List<User> getLikers() {
+		return likers;
 	}
-	public void setUsersWhoLiked(List<User> usersWhoLiked) {
-		this.usersWhoLiked = usersWhoLiked;
-	}
-	public List<Comment> getComments() {
-		return comments;
-	}
-	public void setComments(List<Comment> comments) {
-		this.comments = comments;
+	public void setLikers(List<User> likers) {
+		this.likers = likers;
 	}
 	
-	
+
 }

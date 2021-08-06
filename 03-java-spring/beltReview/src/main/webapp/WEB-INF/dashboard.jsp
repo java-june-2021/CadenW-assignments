@@ -25,6 +25,7 @@
 		<button>Post</button>
 		</form:form>
 		<c:forEach items="${allThoughts}" var="thought">
+		<hr>
 		<p>${thought.user.firstName}:</p>
 		<p>${thought.post}</p>
 		<c:choose>
@@ -35,6 +36,16 @@
 				<p><c:out value="${thought.usersWhoLiked.size()}"/> Likes</p>
 			</c:otherwise>
 		</c:choose> 
+		<form:form method="POST" action="/dashboard/postComment" modelAttribute="comment">
+		<div class="form-control">
+			<form:label path="tComment">Comment On Thought</form:label>
+			<form:errors path="tComment"/>
+			<form:input path="tComment"/>
+		</div>
+		<form:input type="hidden" value="${user.id}" path="user"/>
+		<form:input type="hidden" value="${thought.id}" path="thought"/>
+		<button>Comment</button>
+		</form:form>
 		<c:choose>
 			<c:when test="${thought.user.id == user.id}">
 				<p><a href="/dashboard/${thought.id}/delete">Delete</a></p>
@@ -49,7 +60,6 @@
 		<a href="/dashboard/like/${thought.id}" class="btn 	btn-primary">like</a>
 	</c:otherwise>
 	</c:choose>
-	<hr>
 		</c:forEach>
 		<hr>
 	</div>
