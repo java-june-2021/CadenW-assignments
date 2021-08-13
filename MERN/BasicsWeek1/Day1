@@ -44,4 +44,19 @@ What if we want to skip the first address and only want the city of the second, 
 const { addresses: [ , { city: london }] } = person;
 console.log(london);
 // => London
-const and let: While both const and let are block scoped there are some differences we need to understand. let allows for reassignment of our declared variables content and does not require a value upon declaration. const, on the other hand, must assign a value at creation and that value may not change for the life of the variable. It is immutable.2
+const and let: While both const and let are block scoped there are some differences we need to understand. let allows for reassignment of our declared variables content and does not require a value upon declaration. const, on the other hand, must assign a value at creation and that value may not change for the life of the variable. It is immutable.
+
+Block scoping means declaring a variable, not just inside a function, but around any curly brackets like if statements or loops. The variable itself let i is still in memory, but the engine just won't allow you to access it like before when we used var.
+
+REST AND SPREAD 
+another way to destructer an object or array take this example for rest 
+const animals = ['horse', 'dog', 'fish', 'cat', 'bird'];
+const [firstAnimal, secondAnimal] = animals;
+
+const [firstAnimal, secondAnimal, ...otherAnimals] = animals;
+console.log(otherAnimals); would print ['fish', 'cat', 'bird']
+
+spread is just making a full copy of an object named person and wanted to make another copy of it you would do this:
+const person2 = {...person};
+Side Note: this person2 wont be an EXACT copy. The thing that makes it not is the fact that they have different memory locations but everything else is the same.
+

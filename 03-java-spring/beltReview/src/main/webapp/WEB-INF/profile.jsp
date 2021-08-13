@@ -18,7 +18,7 @@
 		<h4>Email: ${user.email}</h4>
 		<hr>
 		<c:forEach items="${user.thoughts}" var="thought">
-		<p>${user.firstName} says: ${thought.post}</p>
+		<p>${user.firstName} says: ${thought.post} </p>
 		<c:choose>
 			<c:when test="${thought.user.id == loggedInUser.id}">
 				<p><a href="/dashboard/${thought.id}/delete">Delete</a></p>
@@ -42,8 +42,7 @@
 		</c:choose>
 		<h5>Comments:</h5>
 		<c:forEach items="${thought.comments}" var="comment">
-		<p>${comment.user.firstName} Said: ${comment.tComment}</p>
-		
+		<p>${comment.user.firstName} Said: ${comment.tComment}</p>	
 		<hr>
 		</c:forEach>
 		</c:forEach>

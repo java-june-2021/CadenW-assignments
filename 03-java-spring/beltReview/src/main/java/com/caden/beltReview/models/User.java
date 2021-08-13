@@ -23,6 +23,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity 
 @Table(name="users")
 public class User {
@@ -67,7 +69,19 @@ public class User {
         joinColumns = @JoinColumn(name = "user_id"), 
         inverseJoinColumns = @JoinColumn(name = "thought_id")
     )
-    private List <Thought> likedThoughts;
+    @OneToMany(mappedBy="user", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List <Friend> usersFriends;
+    
+    
+    public List<Friend> getUsersFriends() {
+		return usersFriends;
+	}
+	public void setUsersFriends(List<Friend> usersFriends) {
+		this.usersFriends = usersFriends;
+	}
+
+	private List <Thought> likedThoughts;
 	
 	public User() {
 	}
