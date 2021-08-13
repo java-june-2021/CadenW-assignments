@@ -69,20 +69,14 @@ public class User {
         joinColumns = @JoinColumn(name = "user_id"), 
         inverseJoinColumns = @JoinColumn(name = "thought_id")
     )
-    @OneToMany(mappedBy="user", fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List <Friend> usersFriends;
-    
-    
-    public List<Friend> getUsersFriends() {
-		return usersFriends;
-	}
-	public void setUsersFriends(List<Friend> usersFriends) {
-		this.usersFriends = usersFriends;
-	}
-
 	private List <Thought> likedThoughts;
-	
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "currentFriends", 
+        joinColumns = @JoinColumn(name = "user1_id"), 
+        inverseJoinColumns = @JoinColumn(name = "user2_id")
+    )
+    private List <Friend> FriendsOfUsers;
 	public User() {
 	}
 	public Long getId() {

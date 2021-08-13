@@ -1,5 +1,6 @@
 package com.caden.beltReview.services;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,11 @@ public class ThoughtService {
 		usersWhoLiked.remove(user);
 		this.tRepo.save(thought);
 	}
+//	public List<Thought> allThoughtsReversed(Thought allThoughts){
+//		List <Thought> reversedThoughts = 
+//		Collections.sort(reversedThoughts, Collections.reverseOrder());
+//		return reversedThoughts;
+//	}
 	
 
 }
